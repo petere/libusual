@@ -1,0 +1,20 @@
+name: Build
+on: [push]
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-16.04, ubuntu-18.04]
+        compiler: [gcc, clang]
+        configure_args: ["", "--enable-cassert", "--enable-cassert --with-uregex"]
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install build dependencies
+      run: sudo apt-get -y install libevent-dev
+    - run: ./autogen.sh
+    - name: Run configure
+      run: ./configure CC=${{matrix.compiler}} --prefix=$HOME/install --enable-werror ${{matrix.configure_args}}
+    - run: make
+    - run: make check
+    - run: make install
