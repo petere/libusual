@@ -18,5 +18,4 @@ build_script:
 test_script:
   - set HOME=.
   - set PATH=C:/msys64/usr/bin;%PATH%
-  - sh -l -c "make -C test all"
-#TODO:  - sh -l -c "make -C test run"
+  - sh -l -c "make check"
