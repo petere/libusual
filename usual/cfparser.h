@@ -68,7 +68,7 @@ struct CfValue {
 	const void *extra;
 	const char *key_name;
 	char *buf;
-	int buflen;
+	size_t buflen;
 };
 
 /**
@@ -116,7 +116,7 @@ struct CfSect {
 	bool (*set_key)(void *base, const char *key, const char *val);
 
 	/** Get dynamic keys (optional) */
-	const char *(*get_key)(void *base, const char *key, char *buf, int buflen);
+	const char *(*get_key)(void *base, const char *key, char *buf, size_t buflen);
 
 	/** New section callback (optional) */
 	bool (*section_start)(void *top_base, const char *sect_name);
@@ -236,7 +236,7 @@ bool cf_load_file(const struct CfContext *cf, const char *fn) _MUSTCHECK;
 /**
  * Get single value.
  */
-const char *cf_get(const struct CfContext *cf, const char *sect, const char *var, char *buf, int buflen);
+const char *cf_get(const struct CfContext *cf, const char *sect, const char *var, char *buf, size_t buflen);
 
 /**
  * Set single value.

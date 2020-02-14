@@ -48,7 +48,7 @@ static bool parse_ini_file_internal(const char *fn, cf_handler_f user_handler, v
 {
 	char *buf;
 	char *p, *key, *val;
-	int klen, vlen;
+	ptrdiff_t klen, vlen;
 	char o1, o2;
 	bool ok;
 
@@ -226,7 +226,7 @@ static const struct CfKey *find_key(const struct CfSect *s, const char *key)
 }
 
 const char *cf_get(const struct CfContext *cf, const char *sect, const char *key,
-		   char *buf, int buflen)
+		   char *buf, size_t buflen)
 {
 	const struct CfSect *s;
 	const struct CfKey *k;
@@ -455,7 +455,7 @@ bool cf_set_filename(struct CfValue *cv, const char *value)
 {
 	char **dst_p = cv->value_p;
 	char *tmp, *home, *p;
-	int v_len, usr_len, home_len;
+	size_t v_len, usr_len, home_len;
 	struct passwd *pw;
 
 	/* do we need to do tilde expansion */
