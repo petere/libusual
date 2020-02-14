@@ -44,7 +44,7 @@ static inline bool is_power_of_2(unsigned int n)
 /** Rotate 16-bit int to left */
 static inline uint16_t rol16(uint16_t v, int s)
 {
-	return (v << s) | (v >> (16 - s));
+	return (v << (uint16_t) s) | (v >> (16 - (uint16_t) s));
 }
 /** Rotate 32-bit int to left */
 static inline uint32_t rol32(uint32_t v, int s)
@@ -83,7 +83,7 @@ static inline uint64_t ror64(uint64_t v, int s) { return rol64(v, 64 - s); }
 
 #if _COMPILER_GNUC(4,0) || __has_builtin(__builtin_clzll)
 #define _USUAL_FLS_(sfx, type) \
-	return (x == 0) ? 0 : ((8*sizeof(type)) - __builtin_clz ## sfx(x))
+	return (x == 0) ? 0 : ((8*sizeof(type)) - __builtin_clz ## sfx((unsigned type)x))
 #else
 #define _USUAL_FLS_(sfx, type) \
 	unsigned type u = x; \
@@ -176,7 +176,7 @@ static inline int ffsll(long long x)
 		goto safe;		\
 	return false;			\
    safe:				\
-	*res_p = a * b;			\
+   *res_p = (type) (a * b);			\
 	return true;
 
 /** Multiply with overflow check for 'unsigned int' */
