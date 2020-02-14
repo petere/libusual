@@ -13,9 +13,9 @@
 /** MBuf structure.  Allocated by user, can be in stack. */
 struct MBuf {
 	uint8_t *data;
-	unsigned read_pos;
-	unsigned write_pos;
-	unsigned alloc_len;
+	size_t read_pos;
+	size_t write_pos;
+	size_t alloc_len;
 	bool reader;
 	bool fixed;
 };
@@ -30,7 +30,7 @@ struct MBuf {
  */
 
 /** Initialize R/O buffer to fixed memory area. */
-static inline void mbuf_init_fixed_reader(struct MBuf *buf, const void *ptr, unsigned len)
+static inline void mbuf_init_fixed_reader(struct MBuf *buf, const void *ptr, size_t len)
 {
 	buf->data = (uint8_t *)ptr;
 	buf->read_pos = 0;
@@ -41,7 +41,7 @@ static inline void mbuf_init_fixed_reader(struct MBuf *buf, const void *ptr, uns
 }
 
 /** Initialize R/W buffer to fixed memory area. */
-static inline void mbuf_init_fixed_writer(struct MBuf *buf, void *ptr, unsigned len)
+static inline void mbuf_init_fixed_writer(struct MBuf *buf, void *ptr, size_t len)
 {
 	buf->data = (uint8_t *)ptr;
 	buf->read_pos = 0;
